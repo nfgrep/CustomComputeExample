@@ -1,6 +1,13 @@
 #include "/Engine/Public/Platform.ush"
 
+StructuredBuffer<float3> Vertices;
+RWTexture2D<float4> OutputTexture;
+
 [numthreads(32, 32, 1)]
 void MainCompute(uint3 ThreadId : SV_DispatchThreadID)
 {
+    // Take the first vertex and normalize it
+    float3 Vert = normalize(Vertices[0]);
+    // Use it as this pixel's colour
+    OutputTexture[ThreadId.xy] = float4(Vert.x, Vert.y, Vert.z, 1);
 }

@@ -16,9 +16,15 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "CustomComputePlugin",
+			"Name": "CustomComputeModule",
 			"Type": "Runtime",
 			"LoadingPhase": "PostConfigInit"
+		},
+		{
+			"Name": "SceneObjectsModule",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
+
 	]
 }

@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class CustomComputePlugin : ModuleRules
+public class SceneObjectsModule: ModuleRules
 {
-	public CustomComputePlugin(ReadOnlyTargetRules Target) : base(Target)
+	public SceneObjectsModule(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
@@ -38,9 +38,7 @@ public class CustomComputePlugin : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"RenderCore",
-				"RHI",
-				"Projects"
+				"CustomComputeModule",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

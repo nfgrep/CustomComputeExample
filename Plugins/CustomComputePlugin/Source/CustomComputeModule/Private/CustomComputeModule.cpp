@@ -1,27 +1,27 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "CustomComputePlugin.h"
+#include "CustomComputeModule.h"
 #include "CustomComputeShader.h"
 #include "Interfaces/IPluginManager.h"
 #include "GlobalShader.h"
 #include "ShaderCore.h" 
 
-#define LOCTEXT_NAMESPACE "FCustomComputePluginModule"
+#define LOCTEXT_NAMESPACE "FCustomComputeModule"
 
-void FCustomComputePluginModule::StartupModule()
+void FCustomComputeModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 	FString PluginShaderDir = FPaths::Combine(IPluginManager::Get().FindPlugin(TEXT("CustomComputePlugin"))->GetBaseDir(), TEXT("Shaders"));
 	AddShaderSourceDirectoryMapping(TEXT("/Shaders"), PluginShaderDir);
 }
 
-void FCustomComputePluginModule::ShutdownModule()
+void FCustomComputeModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
 }
 
-void FCustomComputePluginModule::EnqueueRenderCommand(UTextureRenderTarget2D* RenderTarget, TArray<FVector> Vertices)
+void FCustomComputeModule::EnqueueRenderCommand(UTextureRenderTarget2D* RenderTarget, TArray<FVector> Vertices)
 {
 	TShaderMapRef<FCustomComputeShader> ComputeShader(GetGlobalShaderMap(GMaxRHIFeatureLevel));
 
@@ -44,4 +44,4 @@ void FCustomComputePluginModule::EnqueueRenderCommand(UTextureRenderTarget2D* Re
 
 #undef LOCTEXT_NAMESPACE
 	
-IMPLEMENT_MODULE(FCustomComputePluginModule, CustomComputePlugin)
+IMPLEMENT_MODULE(FCustomComputeModule, CustomComputeModule)
