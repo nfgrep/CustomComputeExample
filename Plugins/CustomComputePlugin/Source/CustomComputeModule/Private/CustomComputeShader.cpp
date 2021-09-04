@@ -42,9 +42,9 @@ void FCustomComputeShader::BuildAndExecuteGraph(FRHICommandListImmediate &RHICmd
 		1); 
 	// 2. Allocate memory with above desc and get a ref to it
 	FRDGTextureRef OutTextureRef = GraphBuilder.CreateTexture(OutTextureDesc, TEXT("Compute_Out_Texture"));
-	// 3. Make an SRV description from our Texture Ref
+	// 3. Make a UAV description from our Texture Ref
 	FRDGTextureUAVDesc OutTextureUAVDesc(OutTextureRef);
-	// 4. Initialize is as our OutputTexture in our pass params
+	// 4. Initialize it as our OutputTexture in our pass params
 	PassParameters->OutputTexture = GraphBuilder.CreateUAV(OutTextureUAVDesc);
 
 
@@ -59,7 +59,7 @@ void FCustomComputeShader::BuildAndExecuteGraph(FRHICommandListImmediate &RHICmd
 	// ------ Extracting to pooled render target ------
 	TRefCountPtr<IPooledRenderTarget> PooledComputeTarget;
 
-	// Copy the result of compute shader from UAV to pooled render-target
+	// Copy the result of compute shader from UAV to pooled renderT-target
 	GraphBuilder.QueueTextureExtraction(OutTextureRef, &PooledComputeTarget);
 
 	// Execute the graph
