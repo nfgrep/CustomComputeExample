@@ -14,7 +14,6 @@ public:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 
-	void EnqueueRenderCommand(UTextureRenderTarget2D* RenderTarget);
+	void EnqueueRenderCommand(UTextureRenderTarget2D* RenderTarget, TArray<FVector> Vertices);
 
-private:
 };

@@ -3,6 +3,7 @@
 #include "CustomComputePlugin.h"
 #include "CustomComputeShader.h"
 #include "Interfaces/IPluginManager.h"
+#include "GlobalShader.h"
 #include "ShaderCore.h" 
 
 #define LOCTEXT_NAMESPACE "FCustomComputePluginModule"
@@ -20,19 +21,24 @@ void FCustomComputePluginModule::ShutdownModule()
 	// we call this function before unloading the module.
 }
 
-void FCustomComputePluginModule::EnqueueRenderCommand(UTextureRenderTarget2D* RenderTarget)
+void FCustomComputePluginModule::EnqueueRenderCommand(UTextureRenderTarget2D* RenderTarget, TArray<FVector> Vertices)
 {
 	TShaderMapRef<FCustomComputeShader> ComputeShader(GetGlobalShaderMap(GMaxRHIFeatureLevel));
+
+	UTextureRenderTarget2D* RenderTargetParam = RenderTarget;
+	TArray<FVector> VerticesParam = Vertices;
 
 	ENQUEUE_RENDER_COMMAND(ComputeShader)(
 		[
 			ComputeShader,
-			RenderTarget
+			RenderTargetParam,
+			VerticesParam
 		](FRHICommandListImmediate& RHICmdList)
 		{
 			ComputeShader->BuildAndExecuteGraph(
 				RHICmdList,
-				RenderTarget);
+				RenderTargetParam,
+				VerticesParam);
 		});
 }
 

@@ -18,7 +18,7 @@
 		{
 			"Name": "CustomComputePlugin",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "PostConfigInit"
 		}
 	]
 }

@@ -1,0 +1,6 @@
+#include "/Engine/Public/Platform.ush"
+
+[numthreads(32, 32, 1)]
+void MainCompute(uint3 ThreadId : SV_DispatchThreadID)
+{
+}
