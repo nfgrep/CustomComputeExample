@@ -21,6 +21,7 @@ void FCustomComputeModule::ShutdownModule()
 	// we call this function before unloading the module.
 }
 
+
 void FCustomComputeModule::EnqueueRenderCommand(UTextureRenderTarget2D* RenderTarget, TArray<FVector> Vertices)
 {
 	TShaderMapRef<FCustomComputeShader> ComputeShader(GetGlobalShaderMap(GMaxRHIFeatureLevel));

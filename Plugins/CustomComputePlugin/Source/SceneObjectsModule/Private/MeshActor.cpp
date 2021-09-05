@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "MeshActor.h"
@@ -24,7 +23,6 @@ AMeshActor::AMeshActor()
 void AMeshActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AMeshActor::Tick(float DeltaTime)
