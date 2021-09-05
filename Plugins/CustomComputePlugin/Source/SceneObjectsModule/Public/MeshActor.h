@@ -31,8 +31,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	TArray<FVector> GetVerts(AActor* Actor, int32 ActorLOD);
-
+	TArray<FVector> GetVerts(AActor* Actor);
 	FCustomComputeModule ComputeModule;
-
 };

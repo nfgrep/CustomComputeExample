@@ -5,17 +5,25 @@
 #include "RenderTargetPool.h"
 #include "Engine/TextureRenderTarget2D.h"
 
+// Associating the FCustomComputeShader class with the custom HLSL shader code
 IMPLEMENT_GLOBAL_SHADER(FCustomComputeShader, "/Shaders/Private/ComputeShader.usf", "MainCompute", SF_Compute);
 
+
+// This method builds and calls .Execute() on a render-graph for a single frame
 void FCustomComputeShader::BuildAndExecuteGraph(FRHICommandListImmediate &RHICmdList, UTextureRenderTarget2D* RenderTarget, TArray<FVector> InVerts)
 {
+	// Our main point of contant with the RDG
+	// We will use this to add resources (buffers) and passes to the render-graph
 	FRDGBuilder GraphBuilder(RHICmdList);
 
+
+	// This is a pointer to the shader-parameters we declared in the .h
 	FParameters* PassParameters;
+	// We ask the RDG to allocate some memory for our shader-parameters
 	PassParameters = GraphBuilder.AllocParameters<FCustomComputeShader::FParameters>();
 
 
-	// --- Creating a UAV to pass in our detector pixel positions ---
+	// --- Creating an SRV filled with vertex data ---
 	// 1. Create a structured buffer
 	FRDGBufferRef VerticesBuffer = CreateStructuredBuffer(
 		GraphBuilder,
@@ -51,14 +59,12 @@ void FCustomComputeShader::BuildAndExecuteGraph(FRHICommandListImmediate &RHICmd
 	// ------ Add the compute pass ------
 	// Get a reference to our global shader class
 	TShaderMapRef<FCustomComputeShader> ComputeShader(GetGlobalShaderMap(GMaxRHIFeatureLevel));
-	//FIntVector GroupCounts = FIntVector(FMath::DivideAndRoundUp(DrawParameters.GetRenderTargetSize().X, THREADS_PER_GROUP_DIMEN), FMath::DivideAndRoundUp(DrawParameters.GetRenderTargetSize().Y, THREADS_PER_GROUP_DIMEN), 1);
 	// Add the compute shader pass to the render graph
 	FComputeShaderUtils::AddPass(GraphBuilder, RDG_EVENT_NAME("Compute Pass"), ComputeShader, PassParameters, FIntVector(32, 32, 1));
 
 
 	// ------ Extracting to pooled render target ------
 	TRefCountPtr<IPooledRenderTarget> PooledComputeTarget;
-
 	// Copy the result of compute shader from UAV to pooled renderT-target
 	GraphBuilder.QueueTextureExtraction(OutTextureRef, &PooledComputeTarget);
 

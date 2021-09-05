@@ -31,32 +31,32 @@ void AMeshActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	ComputeModule.EnqueueRenderCommand(RenderTarget, GetVerts(this, 0));
-
+	ComputeModule.EnqueueRenderCommand(RenderTarget, GetVerts(this));
 }
 
 // Returns the vertices for the given actor in world-space
-TArray<FVector> AMeshActor::GetVerts(AActor* Actor, int32 ActorLOD)
+TArray<FVector> AMeshActor::GetVerts(AActor* Actor)
 {
-	TArray<FVector> SMVertices;
+	// The array we'll return
+	TArray<FVector> MeshVerts;
 
-	// Get the static mesh from the first static mesh component
+	// Get a static mesh from the first component
 	TArray<UStaticMeshComponent*> StaticMeshComponents = TArray<UStaticMeshComponent*>();
 	Actor->GetComponents<UStaticMeshComponent>(StaticMeshComponents);
-
 	UStaticMesh* StaticMesh = StaticMeshComponents[0]->GetStaticMesh();
 
+	// Check if the static mesh is null
 	if (!StaticMesh)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("StaticMesh[0] was null for actor: ")).Append(Actor->GetName()));
-		return SMVertices;
+		return MeshVerts;
 	}
 
-	// Check if this static mesh has the required LOD
-	if (!(StaticMesh->GetRenderData()->LODResources.Num() > ActorLOD))
+	// Check if this static mesh has a LOD 
+	if (!(StaticMesh->GetRenderData()->LODResources.Num() > 0))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Each mesh must have the supplied LOD To Use"));
-		return SMVertices;
+		return MeshVerts;
 	}
 
 	// Get the vertices
@@ -70,10 +70,10 @@ TArray<FVector> AMeshActor::GetVerts(AActor* Actor, int32 ActorLOD)
 		FVector VertexWS = Actor->GetTransform().TransformPosition(VertexLS);
 
 		// Add it to the array we'll return
-		SMVertices.Add(VertexWS);	// NOTE: .Add can be pretty slow!
+		MeshVerts.Add(VertexWS);	// NOTE: .Add can be pretty slow!
 	}
 
-	return SMVertices;
+	return MeshVerts;
 }
 
 

@@ -6,7 +6,8 @@
 #include "GlobalShader.h"
 #include "ShaderParameterStruct.h"
 
-
+// This is the class that represents our shader within the engine
+// This class is associated with shader-code in the corresponding .cpp
 class FCustomComputeShader : public FGlobalShader
 {
 	DECLARE_GLOBAL_SHADER(FCustomComputeShader)
