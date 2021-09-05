@@ -58,7 +58,7 @@ TArray<FVector> AMeshActor::GetVerts(AActor* Actor)
 	}
 
 	// Get the vertices
-	FPositionVertexBuffer* VertexBuffer = &StaticMesh->GetRenderData()->LODResources[ActorLOD].VertexBuffers.PositionVertexBuffer;
+	FPositionVertexBuffer* VertexBuffer = &StaticMesh->GetRenderData()->LODResources[0].VertexBuffers.PositionVertexBuffer;
 	for (uint32 VertIdx = 0; VertIdx < VertexBuffer->GetNumVertices(); VertIdx++)
 	{
 		// Get this vertex
