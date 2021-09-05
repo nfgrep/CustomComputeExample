@@ -1,4 +1,5 @@
-
+// Author: nfgrep
+// 2021
 
 #include "CustomComputeShader.h"
 #include "RenderGraph.h"

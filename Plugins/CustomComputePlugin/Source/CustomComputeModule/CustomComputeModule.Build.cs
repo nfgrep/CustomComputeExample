@@ -1,4 +1,5 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Author: nfgrep
+// 2021
 
 using UnrealBuildTool;
 
