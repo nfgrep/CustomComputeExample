@@ -24,6 +24,17 @@ AMeshActor::AMeshActor()
 void AMeshActor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (!RenderTarget)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("No Render Target"));
+		this->SetActorTickEnabled(false);
+	}
+	else if (!ExampleMesh)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("No Static Mesh Property"));
+		this->SetActorTickEnabled(false);
+	}
 }
 
 void AMeshActor::Tick(float DeltaTime)
