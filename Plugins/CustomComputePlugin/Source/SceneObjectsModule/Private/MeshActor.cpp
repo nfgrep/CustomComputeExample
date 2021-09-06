@@ -24,6 +24,17 @@ AMeshActor::AMeshActor()
 void AMeshActor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (!RenderTarget)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("No Render Target"));
+		this->SetActorTickEnabled(false);
+	}
+	else if (!ExampleMesh)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("No Static Mesh Property"));
+		this->SetActorTickEnabled(false);
+	}
 }
 
 void AMeshActor::Tick(float DeltaTime)
@@ -52,14 +63,14 @@ TArray<FVector> AMeshActor::GetVerts(AActor* Actor)
 	}
 
 	// Check if this static mesh has a LOD 
-	if (!(StaticMesh->GetRenderData()->LODResources.Num() > 0))
+	if (!(StaticMesh->RenderData->LODResources.Num() > 0))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Each mesh must have the supplied LOD To Use"));
 		return MeshVerts;
 	}
 
 	// Get the vertices
-	FPositionVertexBuffer* VertexBuffer = &StaticMesh->GetRenderData()->LODResources[0].VertexBuffers.PositionVertexBuffer;
+	FPositionVertexBuffer* VertexBuffer = &StaticMesh->RenderData->LODResources[0].VertexBuffers.PositionVertexBuffer;
 	for (uint32 VertIdx = 0; VertIdx < VertexBuffer->GetNumVertices(); VertIdx++)
 	{
 		// Get this vertex
