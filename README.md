@@ -5,4 +5,3 @@ The [Wiki](https://github.com/nfgrep/CustomComputeExample/wiki) of this project 
 
 The implementation and usage of the shader lies entirely in the plugin of this project.
 To demonstrate the use of compute-shaders, the project just colours a texture with the position of the first vertex of a given mesh.  
-This project was build with UE 4.27.  
